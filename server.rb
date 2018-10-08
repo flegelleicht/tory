@@ -12,6 +12,21 @@ configure do
 
   require_relative './models/user'
   require_relative './models/event'
+
+  if User.find(login: "test") == nil
+    testUser = User.create do |u|
+      u.login = "test"
+      u.pass = "test"
+    end
+    ev = Event.new do |e|
+      e.start = DateTime.parse('2018-10-08')
+      e.end = DateTime.parse('2018-10-09')
+      e.name = 'Probetag'
+      e.description = 'Probetag von Erik'
+      e.externalLink = 'https://github.com/flegelleicht/'
+    end
+    testUser.add_event(ev)
+  end
 end
 
 use JwtAuth
@@ -62,7 +77,7 @@ end
 
 post '/api/v1/public/login' do
   headers "Access-Control-Allow-Origin"   => "*"
-  
+
   login = @jsonBody['user']
   passw = @jsonBody['pass']
 
