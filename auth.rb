@@ -4,8 +4,8 @@ class JwtAuth
   end
 
   def decodeBearerInEnv(bearer, env)
-  options = { algorithm: 'HS256', iss: ENV['MEHRMALIST_JWT_ISSUER'] }
-  payload, header = JWT.decode bearer, ENV['MEHRMALIST_JWT_SECRET'], true, options
+  options = { algorithm: 'HS256', iss: 'exercise.territory.de' } #ENV['JWT_ISSUER'] }
+  payload, header = JWT.decode bearer, 'QgxEteYw691PfQKC', true, options #ENV['JWT_SECRET'], true, options
   env[:user] = payload['user']
 end
 
@@ -13,8 +13,8 @@ end
     begin
       if env.fetch('PATH_INFO', '') =~ /(^\/api\/v1)/
         # Only handle api routes
-        if env.fetch('PATH_INFO', '') =~ /\/login$/
-          # Do nothing when trying to log in
+        if env.fetch('PATH_INFO', '') =~ /^\/api\/v1\/public/
+          # Do nothing for public routes
         elsif env.fetch('PATH_INFO', '') =~ /\/updatestream$/
           bearer = CGI.parse(env.fetch('QUERY_STRING', ''))['token'][0]
           decodeBearerInEnv(bearer, env)
