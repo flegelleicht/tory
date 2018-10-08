@@ -83,6 +83,30 @@ get '/api/v1/private/events' do
   end
 end
 
+post '/api/v1/private/events' do
+  content_type :json
+
+  event = @jsonBody['event'];
+  user = User.find(id: request.env[:user]['id'])
+
+  if user and event
+
+    ev = Event.new do |e|
+      e.start = DateTime.parse(event['start'])
+      e.end = DateTime.parse(event['end'])
+      e.name = event['name']
+      e.description = event['description']
+      e.externalLink = event['link']
+    end
+
+    user.add_event(ev)
+
+    [201, { message: 'Successful'}.to_json]
+  else
+    [400, { message: 'Please retry request'}.to_json]
+  end
+end
+
 get '/' do
 	"Hello World!"
 end
