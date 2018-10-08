@@ -52,13 +52,9 @@ def payload(user)
   }
 end
 
-
-post '/api/v1/login' do
+post '/api/v1/public/login' do
   login = @jsonBody['user']
   passw = @jsonBody['pass']
-
-  puts login
-  puts passw
 
   user = User.find(login: login)
 
