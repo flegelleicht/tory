@@ -52,7 +52,17 @@ def payload(user)
   }
 end
 
+options '*' do
+  headers "Allow" => "POST, OPTIONS"
+  headers "Access-Control-Allow-Headers"  => "access-control-allow-origin"
+  headers "Access-Control-Allow-Origin"   => "*"
+  headers "Access-Control-Allow-Methods"  => "all"
+  halt 200
+end
+
 post '/api/v1/public/login' do
+  headers "Access-Control-Allow-Origin"   => "*"
+  
   login = @jsonBody['user']
   passw = @jsonBody['pass']
 
@@ -67,6 +77,7 @@ post '/api/v1/public/login' do
 end
 
 get '/api/v1/public/events' do
+  headers "Access-Control-Allow-Origin"   => "*"
   content_type :json
   Event.all.map{|e| e.to_hash }.to_json
 end
