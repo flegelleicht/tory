@@ -108,5 +108,5 @@ post '/api/v1/private/events' do
 end
 
 get '/' do
-	"Hello World!"
+	send_file './public/index.html', :type => :html
 end
