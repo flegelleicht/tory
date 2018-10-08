@@ -71,6 +71,18 @@ get '/api/v1/public/events' do
   Event.all.map{|e| e.to_hash }.to_json
 end
 
+
+get '/api/v1/private/events' do
+  content_type :json
+  
+  user = User.find(id: request.env[:user]['id'])
+  if user
+    events = user.events.map{|e| e.to_hash }.to_json
+  else
+    [400, { message: 'Please retry request'}.to_json]
+  end
+end
+
 get '/' do
 	"Hello World!"
 end
