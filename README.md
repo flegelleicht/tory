@@ -9,8 +9,8 @@ An exercise in event management
 3. There is a frontend that displays all (known) events and offers login/logout functionality. It is not pretty. 
 4. There is a Dockerfile to bundle everything together
 
-    $ docker build -t exercise .
-    $ docker run -p 4567:4567 exercise
+        $ docker build -t exercise .
+        $ docker run -p 4567:4567 exercise
 
 ## Decisions
 
