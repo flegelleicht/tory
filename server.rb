@@ -66,6 +66,10 @@ post '/api/v1/public/login' do
   end
 end
 
+get '/api/v1/public/events' do
+  content_type :json
+  Event.all.map{|e| e.to_hash }.to_json
+end
 
 get '/' do
 	"Hello World!"
