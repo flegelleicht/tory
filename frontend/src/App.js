@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from 'react-router-dom';
 import './App.css';
-
+import { CreateEvent } from './CreateEvent'
 import Authentication from './Authentication'
 
 class App extends Component {
@@ -14,8 +15,8 @@ class App extends Component {
         loggedIn: false,
         events: []
       }
+      this.save();
     }
-    this.save();
 
     fetch('http://localhost:4567/api/v1/public/events')
       .then(response => {
@@ -78,6 +79,12 @@ class App extends Component {
           {events}
           </ul>
         </div>
+        <Router>
+          <div>
+            <Link to="/event/new">Neuer Event</Link>
+            <Route path="/event/new" component={CreateEvent}/>
+          </div>
+        </Router>
       </React.Fragment>
     );
   }
